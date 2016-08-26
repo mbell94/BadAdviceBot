@@ -12,7 +12,7 @@ namespace ConsoleApplication1
 
         static void Main(string[] args)
         {
-            DiscoBot myBot = new DiscoBot();
+            Bot myBot = new Bot();
 
 
         }
