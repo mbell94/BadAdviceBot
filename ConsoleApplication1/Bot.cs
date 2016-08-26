@@ -11,32 +11,43 @@ namespace ConsoleApplication1
     {
         private DiscordClient bot;
 
-        public void DiscoBot()
+        public Bot()
         {
             bot = new DiscordClient();
 
-
-            bot.MessageReceived += Bot_MessageReceived;
-
             bot.ExecuteAndWait(async() =>
             {
-                await bot.Connect("", "");
+                bot.MessageReceived += Bot_MessageReceived;
+
+                await bot.Connect("MjE4ODU0MzQyNDY2MjA3NzQ0.CqJPjg.Qbdp9udqeGWv2_Zk7vKsGtPS1l4");
             });
         }
 
-        private static void Bot_MessageReceived(object sender, MessageEventArgs e)
+        private void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
+            if (e.Message.IsAuthor) return;
+
             Console.WriteLine("{0} said {1}", e.User.Name, e.Message.Text);
 
             switch (e.Message.Text)
             {
                 case "!rules":
+                    e.Channel.SendMessage(e.User.Mention + " You can do it. I believe it you.");
+                    
                     break;
                 case "who is discobot":
+                    e.Channel.SendMessage(e.User.Mention + " You don't need to know who I am. I am always here. Waiting. Watching.");
                     break;
                 default:
+                    if (e.Message.Text.IndexOf("/") == 0)
+                        findCommand(e.Message.Text);
                     break;
             }
+        }
+
+        private void findCommand(string command)
+        {
+
         }
     }
 }
