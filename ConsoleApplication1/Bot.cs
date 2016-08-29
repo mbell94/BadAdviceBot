@@ -11,15 +11,16 @@ namespace ConsoleApplication1
     {
         private DiscordClient bot;
 
-        public Bot()
+        public void DiscoBot()
         {
             bot = new DiscordClient();
 
+
+            bot.MessageReceived += Bot_MessageReceived;
+
             bot.ExecuteAndWait(async() =>
             {
-                bot.MessageReceived += Bot_MessageReceived;
-
-                await bot.Connect("MjE4ODU0MzQyNDY2MjA3NzQ0.CqJPjg.Qbdp9udqeGWv2_Zk7vKsGtPS1l4");
+                await bot.Connect("");
             });
         }
 
@@ -29,18 +30,17 @@ namespace ConsoleApplication1
 
             Console.WriteLine("{0} said {1}", e.User.Name, e.Message.Text);
 
-            switch (e.Message.Text)
+            switch (e.Message.Text.Trim())
             {
                 case "!rules":
-                    e.Channel.SendMessage(e.User.Mention + " You can do it. I believe it you.");
-                    
+                    e.Channel.SendMessage("Hello, I am bot.  Do not worry about what I do");
                     break;
                 case "who is discobot":
-                    e.Channel.SendMessage(e.User.Mention + " You don't need to know who I am. I am always here. Waiting. Watching.");
+                    e.Channel.SendMessage(e.User.Mention + " Do not worry about who I am.  Just know I am always here. Watching. Waiting.");
                     break;
                 default:
                     if (e.Message.Text.IndexOf("/") == 0)
-                        findCommand(e.Message.Text);
+                        findCommand(e.Message.Text.Trim());
                     break;
             }
         }
